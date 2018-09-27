@@ -4,13 +4,14 @@ import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 public class Grid {
-    final private List<Cell> cells;
+    final public List<Cell> cells;
 
     @Inject
-    Grid(List<CellType> cellTypes) {
+    Grid(Set<CellType> cellTypes) {
         this.cells = new ArrayList();
         Integer x, y;
         x = y = cellTypes.size();

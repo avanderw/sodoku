@@ -6,15 +6,16 @@ import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class Cell {
-    final private Integer x;
-    final private Integer y;
-    private CellType cellType;
+    final public Integer x;
+    final public Integer y;
+    public CellType cellType;
     final private List<CellType> cellTypePool;
 
     @Inject
-    Cell(final Integer x, final Integer y, final List<CellType> cellTypePool) {
+    Cell(final Integer x, final Integer y, final Set<CellType> cellTypePool) {
         this.x = x;
         this.y = y;
         this.cellType = CellType.BLANK;
@@ -23,7 +24,7 @@ public class Cell {
         Collections.shuffle(this.cellTypePool);
     }
 
-    Boolean pickNextCell() {
+    public Boolean pickNextCellType() {
         if (cellTypePool.isEmpty()) {
             return Boolean.FALSE;
         }

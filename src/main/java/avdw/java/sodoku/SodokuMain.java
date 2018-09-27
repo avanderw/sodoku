@@ -19,6 +19,7 @@ public class SodokuMain {
         Grid configuredGrid = difficulty.apply(generatedGrid);
         Grid solvedGrid = solver.solve(configuredGrid);
 
+        Logger.info(String.format("==Generated==%n%s", generatedGrid));
         Logger.info(String.format("generatedGrid.equals(solvedGrid)=%s", generatedGrid.equals(solvedGrid)));
     }
 }
