@@ -1,5 +1,6 @@
 package avdw.java.sodoku.generator;
 
+import avdw.java.sodoku.mapper.CellMapper;
 import avdw.java.sodoku.model.Block;
 import avdw.java.sodoku.model.Cell;
 import avdw.java.sodoku.model.CellType;
@@ -14,17 +15,19 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class BacktrackingGenerator implements Generator {
+    private CellMapper cellMapper;
     private Validator validator;
     private Set<Block> blocks;
 
     @Inject
-    BacktrackingGenerator(Validator validator, Set<Block> blocks) {
+    BacktrackingGenerator(CellMapper cellMapper, Validator validator, Set<Block> blocks) {
+        this.cellMapper = cellMapper;
         this.validator = validator;
         this.blocks = blocks;
     }
 
     public Grid generate() {
-        Grid grid = new Grid();
+        Grid grid = new Grid(cellMapper);
         Stack<Cell> processing = new Stack();
         Stack<Cell> processed = new Stack();
 

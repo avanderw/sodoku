@@ -24,7 +24,7 @@ public class GridMapper {
         IntStream.range(0, matrix.length).forEach(y -> {
             IntStream.range(0, matrix[y].length).forEach(x -> {
                 if (matrix[y][x] != 0) {
-                    Cell cell = grid.cells.get(y * matrix.length + x);
+                    Cell cell = grid.cells.stream().filter(c -> c.y == y && c.x == x).findAny().get();
                     cell.cellType = cellMapper.toCellType((matrix[y][x]));
                     cell.isFixed = Boolean.TRUE;
                 }

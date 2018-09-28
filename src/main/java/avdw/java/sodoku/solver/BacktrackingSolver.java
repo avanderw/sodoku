@@ -35,9 +35,9 @@ class BacktrackingSolver implements Solver {
             }
 
             Block selectedBlock = blocks.stream().filter(block -> block.contains(processing.peek())).findAny().get();
-            List<Cell> rowCells = grid.cells.stream().filter(cell -> cell.y.equals(processing.peek().y)).collect(Collectors.toList());
-            List<Cell> colCells = grid.cells.stream().filter(cell -> cell.x.equals(processing.peek().x)).collect(Collectors.toList());
-            List<Cell> blockCells = grid.cells.stream().filter(selectedBlock::contains).collect(Collectors.toList());
+            List<Cell> rowCells = solved.cells.stream().filter(cell -> cell.y.equals(processing.peek().y)).collect(Collectors.toList());
+            List<Cell> colCells = solved.cells.stream().filter(cell -> cell.x.equals(processing.peek().x)).collect(Collectors.toList());
+            List<Cell> blockCells = solved.cells.stream().filter(selectedBlock::contains).collect(Collectors.toList());
             if (validator.isValid(rowCells) && validator.isValid(colCells) && validator.isValid(blockCells)) {
                 processed.push(processing.pop());
             } else if (!processing.peek().pickNextCellType()) {
