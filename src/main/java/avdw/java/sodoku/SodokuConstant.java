@@ -1,11 +1,5 @@
 package avdw.java.sodoku;
 
-import avdw.java.sodoku.model.Grid;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import java.util.stream.IntStream;
-
 public class SodokuConstant {
     public static final int[][] UNSOLVED_GRID1 =
             {
