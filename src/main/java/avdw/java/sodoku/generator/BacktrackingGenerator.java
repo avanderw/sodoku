@@ -14,19 +14,17 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class BacktrackingGenerator implements Generator {
-    private final Set<CellType> cellTypes;
     private Validator validator;
     private Set<Block> blocks;
 
     @Inject
-    BacktrackingGenerator(Set<CellType> cellTypes, Validator validator, Set<Block> blocks) {
-        this.cellTypes = cellTypes;
+    BacktrackingGenerator(Validator validator, Set<Block> blocks) {
         this.validator = validator;
         this.blocks = blocks;
     }
 
     public Grid generate() {
-        Grid grid = new Grid(cellTypes);
+        Grid grid = new Grid();
         Stack<Cell> processing = new Stack();
         Stack<Cell> processed = new Stack();
 
@@ -46,7 +44,6 @@ public class BacktrackingGenerator implements Generator {
                 processed.peek().pickNextCellType();
                 processing.push(processed.pop());
             }
-
         }
 
         return grid;

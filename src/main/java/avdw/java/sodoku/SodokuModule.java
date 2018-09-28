@@ -2,10 +2,12 @@ package avdw.java.sodoku;
 
 import avdw.java.sodoku.difficulty.DifficultyModule;
 import avdw.java.sodoku.generator.GeneratorModule;
+import avdw.java.sodoku.mapper.MapperModule;
 import avdw.java.sodoku.model.Block;
 import avdw.java.sodoku.model.CellType;
 import avdw.java.sodoku.solver.SolverModule;
 import avdw.java.sodoku.validator.ValidatorModule;
+import com.google.common.collect.BiMap;
 import com.google.common.collect.BoundType;
 import com.google.common.collect.Range;
 import com.google.inject.AbstractModule;
@@ -18,17 +20,7 @@ public class SodokuModule extends AbstractModule {
         install(new GeneratorModule());
         install(new DifficultyModule());
         install(new SolverModule());
-
-        Multibinder<CellType> cellTypeMultibinder = Multibinder.newSetBinder(binder(), CellType.class);
-        cellTypeMultibinder.addBinding().toInstance(CellType.A);
-        cellTypeMultibinder.addBinding().toInstance(CellType.B);
-        cellTypeMultibinder.addBinding().toInstance(CellType.C);
-        cellTypeMultibinder.addBinding().toInstance(CellType.D);
-        cellTypeMultibinder.addBinding().toInstance(CellType.E);
-        cellTypeMultibinder.addBinding().toInstance(CellType.F);
-        cellTypeMultibinder.addBinding().toInstance(CellType.G);
-        cellTypeMultibinder.addBinding().toInstance(CellType.H);
-        cellTypeMultibinder.addBinding().toInstance(CellType.I);
+        install(new MapperModule());
 
         Range xRange1 = (Range.range(0, BoundType.CLOSED, 2, BoundType.CLOSED));
         Range xRange2 = (Range.range(3, BoundType.CLOSED, 5, BoundType.CLOSED));

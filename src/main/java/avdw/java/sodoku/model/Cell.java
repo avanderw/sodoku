@@ -3,24 +3,28 @@ package avdw.java.sodoku.model;
 import com.google.inject.Inject;
 import org.pmw.tinylog.Logger;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Cell {
     final public Integer x;
     final public Integer y;
     public CellType cellType;
-    final private Set<CellType> cellTypePool;
     final private List<CellType> cellTypePoolRemainder;
+    public Boolean isFixed = Boolean.FALSE;
 
     @Inject
-    Cell(final Integer x, final Integer y, final Set<CellType> cellTypePool) {
+    Cell(final Integer x, final Integer y) {
         this.x = x;
         this.y = y;
-        this.cellTypePool = cellTypePool;
         this.cellType = CellType.BLANK;
+        this.cellTypePoolRemainder = new ArrayList();
+        resetPool();
+    }
+
+    Cell(Cell that) {
+        this.x = that.x;
+        this.y = that.y;
+        this.cellType = that.cellType;
         this.cellTypePoolRemainder = new ArrayList();
         resetPool();
     }
@@ -38,7 +42,7 @@ public class Cell {
 
     private void resetPool() {
         this.cellTypePoolRemainder.clear();
-        this.cellTypePoolRemainder.addAll(cellTypePool);
+        this.cellTypePoolRemainder.addAll(CellType.usedValues());
         Collections.shuffle(this.cellTypePoolRemainder);
     }
 }

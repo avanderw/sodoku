@@ -2,6 +2,7 @@ package avdw.java.sodoku;
 
 import avdw.java.sodoku.difficulty.Difficulty;
 import avdw.java.sodoku.generator.Generator;
+import avdw.java.sodoku.mapper.GridMapper;
 import avdw.java.sodoku.model.Grid;
 import avdw.java.sodoku.solver.Solver;
 import com.google.inject.Guice;
@@ -28,7 +29,7 @@ public class SodokuMain {
         Integer generationCount = 100;
         List<Grid> generatedGrids = new ArrayList();
         DescriptiveStatistics generationStats = new DescriptiveStatistics();
-        Logger.info(String.format("Staring generation of a %s grids", generationCount));
+        Logger.info(String.format("Starting generation of a %s grids", generationCount));
         Long totalGridGenerationStart = System.currentTimeMillis();
         IntStream.range(0, generationCount).forEach(count -> {
             Long gridGenerationStart = System.currentTimeMillis();
@@ -38,12 +39,13 @@ public class SodokuMain {
         });
         Logger.info(String.format("Generation took %,dms", System.currentTimeMillis() - totalGridGenerationStart));
         Logger.info(generationStats);
+        Logger.info(String.format("Generation example%n%s", generatedGrids.get(0)));
 
-        Grid generatedGrid = generator.generate();
-        Grid configuredGrid = difficulty.apply(generatedGrid);
-        Grid solvedGrid = solver.solve(configuredGrid);
+        //Grid configuredGrid = difficulty.apply(generatedGrid);
+        Grid unsolvedGrid = injector.getInstance(GridMapper.class).toGrid(SodokuConstant.UNSOLVED_GRID1);
+        Logger.info(String.format("Unsolved grid%n%s", unsolvedGrid));
+        Logger.info(String.format("Solved%n%s", solver.solve(unsolvedGrid)));
 
-        Logger.info(String.format("Generation example%n%s", generatedGrid));
         //Logger.info(String.format("generatedGrid.equals(solvedGrid)=%s", generatedGrid.equals(solvedGrid)));
     }
 }
