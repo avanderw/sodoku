@@ -1,7 +1,7 @@
 package avdw.java.sodoku.model;
 
-import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
+import org.pmw.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,24 +12,33 @@ public class Cell {
     final public Integer x;
     final public Integer y;
     public CellType cellType;
-    final private List<CellType> cellTypePool;
+    final private Set<CellType> cellTypePool;
+    final private List<CellType> cellTypePoolRemainder;
 
     @Inject
     Cell(final Integer x, final Integer y, final Set<CellType> cellTypePool) {
         this.x = x;
         this.y = y;
+        this.cellTypePool = cellTypePool;
         this.cellType = CellType.BLANK;
-        this.cellTypePool = new ArrayList();
-        this.cellTypePool.addAll(cellTypePool);
-        Collections.shuffle(this.cellTypePool);
+        this.cellTypePoolRemainder = new ArrayList();
+        resetPool();
     }
 
     public Boolean pickNextCellType() {
-        if (cellTypePool.isEmpty()) {
+        if (cellTypePoolRemainder.isEmpty()) {
+            cellType = CellType.BLANK;
+            resetPool();
             return Boolean.FALSE;
         }
 
-        cellType = cellTypePool.remove(0);
+        cellType = cellTypePoolRemainder.remove(0);
         return Boolean.TRUE;
+    }
+
+    private void resetPool() {
+        this.cellTypePoolRemainder.clear();
+        this.cellTypePoolRemainder.addAll(cellTypePool);
+        Collections.shuffle(this.cellTypePoolRemainder);
     }
 }
